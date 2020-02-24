@@ -62,7 +62,11 @@ public class ReadJsoup {
             if (row instanceof Element) {
                 if (row.childNodes().isEmpty()) continue;
                 //last name
-                sb.append(((Element) row.childNode(1).childNode(0)).text());
+                if (!row.childNode(1).childNodes().isEmpty()) {
+                    sb.append("\"");
+                    sb.append(((Element) row.childNode(1).childNode(0)).text());
+                    sb.append("\"");
+                } else continue;
                 sb.append(split);
                 //first name
                 if (!row.childNode(3).childNodes().isEmpty())
@@ -71,7 +75,7 @@ public class ReadJsoup {
                 sb.append(split);
                 //firm name
                 if (!row.childNode(5).childNodes().isEmpty())
-                    sb.append(((TextNode) row.childNode(5).childNode(0)).text());
+                    sb.append(((TextNode) row.childNode(5).childNode(0)).text().replace(",", " "));
                 sb.append(split);
                 //country
                 if (!row.childNode(7).childNodes().isEmpty())

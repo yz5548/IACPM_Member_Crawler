@@ -40,9 +40,11 @@ public class ReadPageRunnable implements Runnable {
             if (row instanceof Element) {
                 if (row.childNodes().isEmpty()) continue;
                 //last name
-                if (!row.childNode(1).childNodes().isEmpty())
+                if (!row.childNode(1).childNodes().isEmpty()) {
+                    sb.append("\"");
                     sb.append(((Element) row.childNode(1).childNode(0)).text());
-                else continue;
+                    sb.append("\"");
+                } else continue;
                 sb.append(split);
                 //first name
                 if (!row.childNode(3).childNodes().isEmpty())
@@ -51,7 +53,7 @@ public class ReadPageRunnable implements Runnable {
                 sb.append(split);
                 //firm name
                 if (!row.childNode(5).childNodes().isEmpty())
-                    sb.append(((TextNode) row.childNode(5).childNode(0)).text());
+                    sb.append(((TextNode) row.childNode(5).childNode(0)).text().replace(",", " "));
                 sb.append(split);
                 //country
                 if (!row.childNode(7).childNodes().isEmpty())
@@ -68,9 +70,8 @@ public class ReadPageRunnable implements Runnable {
                 else mailto = "***** need attention *****";
                 String email = mailto.substring(mailto.indexOf(":") + 1);
                 sb.append(email);
-                // System.out.println(sb.toString());
             }
-            sbt.append(sbt.toString());
+            sbt.append(sb.toString());
         }
         return sbt.toString();
     }
